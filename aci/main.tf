@@ -16,8 +16,8 @@ provider "azurerm" {
 }
 
 locals {
-  location            = "North Europe"
-  name                = "azuredemouhasselt"
+  location = "North Europe"
+  name     = "azuredemoap"
 }
 
 resource "azurerm_resource_group" "rg" {

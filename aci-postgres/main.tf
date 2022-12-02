@@ -25,7 +25,7 @@ provider "azuread" {
 
 locals {
   location            = "North Europe"
-  name                = "azuredemouhasselt"
+  name                = "azuredemoap"
 
   user_email="pieter.vincken@ordina.be"
 
@@ -139,8 +139,8 @@ resource "azurerm_postgresql_firewall_rule" "firewall_postgres" {
   end_ip_address      = "0.0.0.0"
 }
 
-resource "azurerm_postgresql_database" "uhasselt" {
-  name                = "uhasseltdb"
+resource "azurerm_postgresql_database" "database" {
+  name                = "apdb"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
   charset             = "UTF8"

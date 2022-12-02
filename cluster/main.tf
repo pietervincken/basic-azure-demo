@@ -24,15 +24,15 @@ provider "azuread" {
 }
 
 locals {
-  user_email="pieter.vincken@ordina.be"
+  user_email = "pieter.vincken@ordina.be"
 
   common_tags = {
     created-by = local.user_email
     project    = local.name
   }
 
-  location    = "West Europe"
-  name = "aksdemouhasselt"
+  location = "West Europe"
+  name     = "aksdemoap"
 
   tenant_domain = data.azuread_domains.aad_domains.domains.0.domain_name
   upn           = "${replace(local.user_email, "@", "_")}#EXT#@${local.tenant_domain}"
@@ -41,7 +41,7 @@ locals {
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${local.name}"
   location = local.location
-  tags = local.common_tags
+  tags     = local.common_tags
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
@@ -60,7 +60,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     os_sku              = "Ubuntu"
   }
 
- azure_active_directory_role_based_access_control {
+  azure_active_directory_role_based_access_control {
     managed = true
   }
 
