@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.21.1"
+      version = "=3.74.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=2.28.1"
+      version = "=2.43.0"
     }
   }
   backend "azurerm" {}
@@ -49,7 +49,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = local.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = local.name
-  kubernetes_version  = "1.24.3"
+  kubernetes_version  = "1.27.3"
 
   default_node_pool {
     zones               = [3]
@@ -70,26 +70,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   tags = local.common_tags
 
-}
-
-resource "azurerm_container_registry" "acr" {
-  name                = "acr${local.name}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = local.location
-  tags                = local.common_tags
-  sku                 = "Basic"
-}
-
-resource "azurerm_role_assignment" "aksacr" {
-  scope                = azurerm_container_registry.acr.id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_kubernetes_cluster.cluster.kubelet_identity[0].object_id
-}
-
-resource "azurerm_role_assignment" "aks" {
-  scope                = azurerm_kubernetes_cluster.cluster.id
-  role_definition_name = "Azure Kubernetes Service Cluster Admin Role"
-  principal_id         = data.azuread_user.user.object_id
 }
 
 data "azuread_user" "user" {

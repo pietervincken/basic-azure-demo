@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.21.1"
+      version = "=3.74.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=2.28.1"
+      version = "=2.43.0"
     }
   }
   backend "azurerm" {}
@@ -24,10 +24,10 @@ provider "azuread" {
 }
 
 locals {
-  location            = "North Europe"
-  name                = "azuredemoap"
+  location = "North Europe"
+  name     = "azuredemoap"
 
-  user_email="pieter.vincken@ordina.be"
+  user_email = "pieter.vincken@ordina.be"
 
   tenant_domain = data.azuread_domains.aad_domains.domains.0.domain_name
   upn           = "${replace(local.user_email, "@", "_")}#EXT#@${local.tenant_domain}"
@@ -71,7 +71,7 @@ resource "azurerm_container_group" "aci" {
 
   container {
     name   = "hello-world"
-    image  = "bitnami/phppgadmin"
+    image  = "bitnami/phppgadmin-archived"
     cpu    = "0.5"
     memory = "1.5"
     environment_variables = {
@@ -140,7 +140,7 @@ resource "azurerm_postgresql_firewall_rule" "firewall_postgres" {
 }
 
 resource "azurerm_postgresql_database" "database" {
-  name                = "apdb"
+  name                = "demodb"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
   charset             = "UTF8"

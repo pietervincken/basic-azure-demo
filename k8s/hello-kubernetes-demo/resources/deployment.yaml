@@ -9,8 +9,7 @@ metadata:
     app.kubernetes.io/version: "1.10"
 spec:
   strategy:
-    rollingUpdate:
-
+    type: RollingUpdate
   replicas: 1
   selector:
     matchLabels:
@@ -68,4 +67,4 @@ spec:
               memory: 1Gi
             requests:
               cpu: 10m
-              memory: 64Mi
+              memory: 32Mi

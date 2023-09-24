@@ -32,7 +32,7 @@ helloworldIP=$external_ip
 
 echo "\nHello-kubernetes demo is ready!"
 echo "http://$helloworldIP"
-echo "watch -n 1 curl http://$helloworldIP\n"
+echo "watch -d -n 1 curl -s http://$helloworldIP\n"
 open http://$helloworldIP
 
 external_ip=""

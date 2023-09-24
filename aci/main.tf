@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.21.1"
+      version = "=3.74.0"
     }
   }
   backend "azurerm" {}
@@ -38,7 +38,7 @@ resource "azurerm_container_group" "aci" {
 
   container {
     name   = "snake-server"
-    image  = "pietervincken/snake-server:0.0.1"
+    image  = "pietervincken/snake-server:0.0.2"
     cpu    = "0.5"
     memory = "0.2"
 
