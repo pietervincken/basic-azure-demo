@@ -131,12 +131,24 @@ resource "azurerm_postgresql_server" "database" {
 
 }
 
-resource "azurerm_postgresql_firewall_rule" "firewall_postgres" {
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
+resource "azurerm_postgresql_firewall_rule" "aci_access" {
   name                = "pgfr-${local.name}"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
+}
+
+resource "azurerm_postgresql_firewall_rule" "local_access" {
+  name                = "pgfr-${local.name}-local"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.database.name
+  start_ip_address    = chomp(data.http.myip.body)
+  end_ip_address      = chomp(data.http.myip.body)
 }
 
 resource "azurerm_postgresql_database" "database" {
