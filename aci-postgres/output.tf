@@ -17,3 +17,11 @@ output "pg_username"{
 output "pg_name"{
     value= azurerm_postgresql_server.database.name
 }
+
+output "pg_fqdn" {
+  value= azurerm_postgresql_server.database.fqdn
+}
+
+output "pg_db_name"{
+    value= azurerm_postgresql_database.database.name
+}
