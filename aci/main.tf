@@ -17,7 +17,7 @@ provider "azurerm" {
 
 locals {
   location = "North Europe"
-  name     = "azuredemoap"
+  name     = "basicazuredemo"
 }
 
 resource "azurerm_resource_group" "rg" {
