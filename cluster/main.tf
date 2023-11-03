@@ -32,7 +32,7 @@ locals {
   }
 
   location = "West Europe"
-  name     = "aksdemoap"
+  name     = "basicazuredemoaks"
 
   tenant_domain = data.azuread_domains.aad_domains.domains.0.domain_name
   upn           = "${replace(local.user_email, "@", "_")}#EXT#@${local.tenant_domain}"

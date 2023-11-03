@@ -41,7 +41,7 @@ provider "http" {
 
 locals {
   location = "North Europe"
-  name     = "azuredemoap"
+  name     = "basicazuredemo"
 
   user_email = "pieter.vincken@ordina.be"
 
