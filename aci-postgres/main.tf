@@ -10,6 +10,14 @@ terraform {
       source  = "hashicorp/azuread"
       version = "=2.45.0"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "=3.4.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "=3.5.1"
+    }
   }
   backend "azurerm" {}
 }
@@ -21,6 +29,14 @@ provider "azurerm" {
 
 # Configure the Azure Active Directory Provider
 provider "azuread" {
+}
+
+provider "random" {
+
+}
+
+provider "http" {
+
 }
 
 locals {
@@ -147,8 +163,8 @@ resource "azurerm_postgresql_firewall_rule" "local_access" {
   name                = "pgfr-${local.name}-local"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.database.name
-  start_ip_address    = chomp(data.http.myip.body)
-  end_ip_address      = chomp(data.http.myip.body)
+  start_ip_address    = chomp(data.http.myip.response_body)
+  end_ip_address      = chomp(data.http.myip.response_body)
 }
 
 resource "azurerm_postgresql_database" "database" {

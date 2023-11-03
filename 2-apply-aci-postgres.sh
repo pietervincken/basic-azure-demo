@@ -1,10 +1,17 @@
 #!/bin/bash
 set -e
 
+
+
 cd aci-postgres
 terraform init -backend-config=config.azurerm.tfbackend
 terraform apply -auto-approve
 terraform output -json > output.json
+
+if ! docker info > /dev/null 2>&1; then
+  echo "This script uses docker, and it isn't running - please start docker and try again!"
+  exit 1
+fi
 
 fqdn=$(cat output.json| jq --raw-output '.aci_fqdn.value')
 
@@ -58,7 +65,8 @@ fi
 password=$(az keyvault secret show --id $secret_id --query value | jq --raw-output)
 
 # load test data
-docker run -it --rm -v $PWD:/app -e PGPASSWORD="$password" bitnami/postgresql:11 psql -f /app/random.sql -h $db_fqdn -U $username@$instance_name -d $db_name
+docker run -it --rm -v $PWD:/app -e PGPASSWORD="$password" bitnami/postgresql:11 psql -f /app/schema.sql -h $db_fqdn -U $username@$instance_name -d $db_name
+docker run -it --rm -v $PWD:/app -e PGPASSWORD="$password" bitnami/postgresql:11 psql -f /app/users.sql -h $db_fqdn -U $username@$instance_name -d $db_name
 
 echo "\nFQDN: "
 echo "http://$fqdn:8080\n"
