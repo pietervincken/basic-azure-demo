@@ -24,8 +24,8 @@ fi
 az account set -s $subscription
 az group show --name $rgstate || az group create -l $location -n $rgstate
 az storage account show --name $sastate || (az storage account create -n $sastate -g $rgstate -l $location --sku Standard_LRS)
-az storage container create -n tfstate-cluster --account-name $sastate --public-access blob --auth-mode login
-az storage container create -n tfstate-aci --account-name $sastate --public-access blob --auth-mode login
+az storage container create -n tfstate-cluster --account-name $sastate --auth-mode login
+az storage container create -n tfstate-aci --account-name $sastate --auth-mode login
 
 echo "Create containers manually! currently fails in script!"
 
