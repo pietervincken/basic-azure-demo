@@ -27,8 +27,6 @@ az storage account show --name $sastate || (az storage account create -n $sastat
 az storage container create -n tfstate-cluster --account-name $sastate --auth-mode login
 az storage container create -n tfstate-aci --account-name $sastate --auth-mode login
 
-echo "Create containers manually! currently fails in script!"
-
 rm cluster/config.azurerm.tfbackend || true
 
 echo "resource_group_name  = \"$rgstate\""          >> cluster/config.azurerm.tfbackend

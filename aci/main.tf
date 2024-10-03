@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.79.0"
+      version = "=4.3.0"
     }
   }
   backend "azurerm" {}
@@ -35,6 +35,12 @@ resource "azurerm_container_group" "aci" {
   ip_address_type     = "Public"
   dns_name_label      = local.name
   os_type             = "Linux"
+
+  image_registry_credential {
+    username = var.docker_username
+    password = var.docker_pat
+    server = "index.docker.io"
+  }
 
   container {
     name   = "snake-server"

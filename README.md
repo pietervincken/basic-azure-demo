@@ -19,6 +19,9 @@ export sastate="saxxx" # Storage account name to be created to hold the terrafor
 export subscription="xxx-xxx-xxx-xxx-xxx" # Subscription ID where this demo needs to be deployed
 export tenant="xxx-xxx-xxx-xxx-xxx" # Tenant ID used for this demo (needed for some TF configuration)
 export ARM_TENANT_ID=$tenant # This is needed to pass the tenant ID to the Terraform setup. 
+export ARM_SUBSCRIPTION_ID=$subscription # This is needed to pass the subscription ID to the Terraform setup. 
+export TF_VAR_docker_username="xxx" # Needed due to pull limit of docker hub
+export TF_VAR_docker_pat="xxx" # Needed due to pull limit of docker hub
 ```
 
 ### 0-prepare.sh
