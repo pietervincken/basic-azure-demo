@@ -4,19 +4,19 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.79.0"
+      version = "=4.3.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=2.45.0"
+      version = "=2.53.1"
     }
     http = {
       source  = "hashicorp/http"
-      version = "=3.4.0"
+      version = "=3.4.5"
     }
     random = {
       source  = "hashicorp/random"
-      version = "=3.5.1"
+      version = "=3.6.3"
     }
   }
   backend "azurerm" {}
@@ -84,6 +84,12 @@ resource "azurerm_container_group" "aci" {
   ip_address_type     = "Public"
   dns_name_label      = local.name
   os_type             = "Linux"
+
+  image_registry_credential {
+    username = var.docker_username
+    password = var.docker_pat
+    server = "index.docker.io"
+  }
 
   container {
     name   = "hello-world"
