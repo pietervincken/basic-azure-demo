@@ -14,8 +14,7 @@ A dot-env file is required for this demo to run. Fill it with the following cont
 
 ``` bash
 export location="westeurope" # Location to be used by the demo. Terraform resources might get created outside of this!
-export rgstate="rg-xxx" # Name of the resource group to be created for the storage account below
-export sastate="saxxx" # Storage account name to be created to hold the terraform state for this demo
+export name="xxx" # Name of the prefix for resources created
 export subscription="xxx-xxx-xxx-xxx-xxx" # Subscription ID where this demo needs to be deployed
 export tenant="xxx-xxx-xxx-xxx-xxx" # Tenant ID used for this demo (needed for some TF configuration)
 export ARM_TENANT_ID=$tenant # This is needed to pass the tenant ID to the Terraform setup. 

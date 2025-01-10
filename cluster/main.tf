@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=4.3.0"
+      version = "=4.15.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=2.53.1"
+      version = "=3.0.2"
     }
   }
   backend "azurerm" {}
@@ -24,18 +24,13 @@ provider "azuread" {
 }
 
 locals {
-  user_email = "pieter.vincken@ordina.be"
-
   common_tags = {
-    created-by = local.user_email
+    created-by = var.user_email
     project    = local.name
   }
 
   location = "West Europe"
-  name     = "basicazuredemoaks"
-
-  tenant_domain = data.azuread_domains.aad_domains.domains.0.domain_name
-  upn           = "${replace(local.user_email, "@", "_")}#EXT#@${local.tenant_domain}"
+  name     = "soprabasicazuredemoaks"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -49,11 +44,11 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = local.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = local.name
-  kubernetes_version  = "1.30.4"
+  kubernetes_version  = "1.31.2"
   sku_tier = "Standard"
 
   default_node_pool {
-    zones               = [3]
+    zones               = [2]
     node_count          = 3
     vm_size             = "standard_b2s"
     name                = "default"
@@ -78,9 +73,5 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 }
 
 data "azuread_user" "user" {
-  user_principal_name = local.upn
-}
-
-data "azuread_domains" "aad_domains" {
-
+  user_principal_name = var.user_email
 }

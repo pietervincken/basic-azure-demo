@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=4.3.0"
+      version = "=4.15.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=2.53.1"
+      version = "=3.0.2"
     }
     http = {
       source  = "hashicorp/http"
@@ -24,7 +24,12 @@ terraform {
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
-  features {}
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
 }
 
 # Configure the Azure Active Directory Provider
@@ -40,13 +45,8 @@ provider "http" {
 }
 
 locals {
-  location = "North Europe"
-  name     = "basicazuredemo"
-
-  user_email = "pieter.vincken@ordina.be"
-
-  tenant_domain = data.azuread_domains.aad_domains.domains.0.domain_name
-  upn           = "${replace(local.user_email, "@", "_")}#EXT#@${local.tenant_domain}"
+  location = "West Europe"
+  name     = "soprabasicazuredemo"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -66,6 +66,7 @@ resource "azurerm_key_vault" "mykeyvault" {
   sku_name            = "standard"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   location            = local.location
+  purge_protection_enabled = true
 }
 
 resource "azurerm_key_vault_access_policy" "myaccess" {
@@ -183,9 +184,5 @@ resource "azurerm_postgresql_database" "database" {
 
 
 data "azuread_user" "user" {
-  user_principal_name = local.upn
-}
-
-data "azuread_domains" "aad_domains" {
-
+  user_principal_name = var.user_email
 }

@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=4.3.0"
+      version = "=4.15.0"
     }
   }
   backend "azurerm" {}
@@ -16,8 +16,8 @@ provider "azurerm" {
 }
 
 locals {
-  location = "North Europe"
-  name     = "basicazuredemo"
+  location = "West Europe"
+  name     = "soprabasicazuredemo"
 }
 
 resource "azurerm_resource_group" "rg" {

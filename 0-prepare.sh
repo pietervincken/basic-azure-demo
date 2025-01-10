@@ -6,24 +6,29 @@ if [ -z $subscription ]; then
     exit 1
 fi
 
-if [ -z $rgstate ]; then
-    echo "Could not find rgstate. Stopping!"
-    exit 1
-fi
 
 if [ -z $location ]; then
     echo "Could not find location. Stopping!"
     exit 1
 fi
 
-if [ -z $sastate ]; then
-    echo "Could not find sastate. Stopping!"
+if [ -z $name ]; then
+    echo "Could not find name. Stopping!"
     exit 1
 fi
 
+rgstate="rg-$name"
+sastate="sa$name"
+
+# remove all non-alphanumeric characters from string
+sastate=$(echo $sastate | tr -cd '[:alnum:]')
+
+echo "rg=$rgstate"
+echo "sa=$sastate"
+
 az account set -s $subscription
 az group show --name $rgstate || az group create -l $location -n $rgstate
-az storage account show --name $sastate || (az storage account create -n $sastate -g $rgstate -l $location --sku Standard_LRS)
+az storage account show --name $sastate || (az storage account create -n $sastate -g $rgstate -l $location --sku Standard_LRS --min-tls-version TLS1_2)
 az storage container create -n tfstate-cluster --account-name $sastate --auth-mode login
 az storage container create -n tfstate-aci --account-name $sastate --auth-mode login
 
