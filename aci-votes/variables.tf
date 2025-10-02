@@ -5,7 +5,7 @@ variable "docker_username" {
 variable "docker_pat" {
   description = "Pat used to pull image from docker hub"
 }
-variable "user_email" {
+variable "email" {
   description = "Email of the user"
   type = string
 }

@@ -4,11 +4,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=4.15.0"
+      version = "=4.46.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "=3.0.2"
+      version = "=3.6.0"
     }
   }
   backend "azurerm" {}
@@ -25,12 +25,12 @@ provider "azuread" {
 
 locals {
   common_tags = {
-    created-by = var.user_email
+    created-by = var.email
     project    = local.name
   }
 
   location = "West Europe"
-  name     = "soprabasicazuredemoaks"
+  name     = "cgkpieteraksdemo"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -73,5 +73,5 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 }
 
 data "azuread_user" "user" {
-  user_principal_name = var.user_email
+  user_principal_name = var.email
 }

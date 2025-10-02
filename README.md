@@ -34,7 +34,7 @@ This script creates a demo ACI setup.
 It launches a single ACI instance with a Snake game demo. 
 After the Terraform changes have been applied, it will automatically launch the resulting ACI link in the default webbrowser.
 
-### 2-apply-aci-postgres.sh
+### 2-apply-aci-votes.sh
 
 This script launches the 2nd ACI demo. 
 This demo contains a setup with a Azure Databases for PostgreSQL database, a Key Vault and an ACI container PhpPgAdmin. 

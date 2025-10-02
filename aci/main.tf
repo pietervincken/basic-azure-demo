@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=4.15.0"
+      version = "=4.46.0"
     }
   }
   backend "azurerm" {}
@@ -17,15 +17,18 @@ provider "azurerm" {
 
 locals {
   location = "West Europe"
-  name     = "soprabasicazuredemo"
+  name     = "cgkpieterazuredemo"
+  tags = {
+    Owner = var.email
+  }
 }
 
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${local.name}"
   location = local.location
-  tags = {
+  tags = merge(local.tags, {
     environment = "demo"
-  }
+  })
 }
 
 resource "azurerm_container_group" "aci" {
@@ -54,7 +57,7 @@ resource "azurerm_container_group" "aci" {
     }
   }
 
-  tags = {
+  tags = merge(local.tags, {
     environment = "demo"
-  }
+  })
 }
