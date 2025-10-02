@@ -7,5 +7,5 @@ variable "docker_pat" {
 }
 variable "email" {
   description = "Email of the user"
-  type = string
+  type        = string
 }
