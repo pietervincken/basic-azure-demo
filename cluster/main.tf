@@ -25,8 +25,8 @@ provider "azuread" {
 
 locals {
   common_tags = {
-    created-by = var.email
-    project    = local.name
+    Owner     = var.email
+    environment = "demo"
   }
 
   location = "West Europe"
@@ -44,7 +44,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = local.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = local.name
-  kubernetes_version  = "1.31.2"
+  kubernetes_version  = "1.33.3"
   sku_tier = "Standard"
 
   default_node_pool {

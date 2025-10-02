@@ -37,9 +37,9 @@ After the Terraform changes have been applied, it will automatically launch the 
 ### 2-apply-aci-votes.sh
 
 This script launches the 2nd ACI demo. 
-This demo contains a setup with a Azure Databases for PostgreSQL database, a Key Vault and an ACI container PhpPgAdmin. 
-After the demo is applied, the browser will launch the website to PhPPgAdmin and the username and password of the database will be shown in the output of the command. 
-In this demo, you can show that it's possible to setup a database, connect to if from a service within Azure without exposing it to the public world.
+This includes a demo voting application with a Redis backend.
+After the Terraform changes have been applied, it will automatically launch the resulting ACI link in the default webbrowser. 
+This demo is based on https://github.com/dockersamples/example-voting-app.
 
 ### 3-apply-cluster.sh
 
