@@ -11,6 +11,11 @@ if [ -z "$docker_pat" ]; then
     exit 1
 fi
 
+if [ -z "$email" ]; then
+    echo "Could not find email. Stopping!"
+    exit 1
+fi
+
 cd aci-votes
 tofu init -backend-config=config.azurerm.tfbackend -upgrade
 tofu apply -auto-approve -var docker_username=$docker_username -var docker_pat=$docker_pat -var email=$email
