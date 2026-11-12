@@ -32,7 +32,7 @@ spec:
       serviceAccountName: hello-kubernetes-hello-world
       containers:
         - name: hello-kubernetes
-          image: "paulbouwer/hello-kubernetes:1.10.1"
+          image: "paulbouwer/hello-kubernetes:1.11.0"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -60,7 +60,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: CONTAINER_IMAGE
-              value: "paulbouwer/hello-kubernetes:1.10"
+              value: "paulbouwer/hello-kubernetes:1.11.0"
           resources:
             limits:
               cpu: 1
